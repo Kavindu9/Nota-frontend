@@ -350,8 +350,6 @@ export async function getGlobal(): Promise<GlobalData | null> {
   "use cache";
   cacheLife("minutes");
 
-  // The try/catch must be INSIDE this "use cache" function: an error thrown out of a cached
-  // function stops the whole build, even if the caller catches it.
   try {
     const data: GlobalData = await fetchFromStrapi("/api/global?populate[seo][populate]=shareImage");
     if (data.seo?.shareImage) data.seo.shareImage.url = getStrapiMedia(data.seo.shareImage.url);

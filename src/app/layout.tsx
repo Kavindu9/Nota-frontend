@@ -30,32 +30,34 @@ const FALLBACK = {
 
 export async function generateMetadata(): Promise<Metadata> {
 
-  const global = await getGlobal(); // null if Strapi refused or couldn't be reached
+  const global = await getGlobal();
   const seo = global?.seo;
-  if (!seo) return FALLBACK;
-
-  
-  try {
-    const { siteName, seo } = await getGlobal();
-    if (!seo) return FALLBACK;
-
-    const image = seo.shareImage;
-    const images = image
-      ? [{ url: image.url, width: image.width ?? undefined, height: image.height ?? undefined, alt: image.alternativeText ?? seo.metaTitle }]
-      : undefined;
+  if (!seo) return FALLBACK; // for no SEO data
+  const image = seo.shareImage;
+  const images = image
+    ? [{ url: image.url, width: image.width ?? undefined, height: image.height ?? undefined, alt: image.alternativeText ?? seo.metaTitle }]
+    : undefined;
 
 
     return {
       metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
       title: seo.metaTitle,
       description: seo.metaDescription,
-      openGraph: { type: "website", siteName, title: seo.metaTitle, description: seo.metaDescription, images },
-      twitter: { card: "summary_large_image", title: seo.metaTitle, description: seo.metaDescription },
+      openGraph: {
+        type: "website",
+        siteName: global.siteName,
+        title: seo.metaTitle,
+        description: seo.metaDescription,
+        images,
+      },
+      twitter: {
+        card: image ? "summary_large_image" : "summary", // big picture preview when there's an image
+        title: seo.metaTitle,
+        description: seo.metaDescription,
+        images: images?.map((i) => i.url),
+      },
       robots: seo.preventIndexing ? { index: false, follow: false } : undefined,
-    };
-  } catch {
-    return FALLBACK; // Strapi unreachable → still a sensible title
-  }
+  };
 }
 
 
