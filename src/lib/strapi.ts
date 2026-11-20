@@ -305,16 +305,16 @@ function getStrapiMedia(url: string): string {
 
 
 
-export interface NotifyPopupData {
-  id: number;
-  documentId?: string;
-  title?: string;
-  description?: string;
-  buttonText?: string;
-  buttonLink?: string;
-  isActive?: boolean;
-  [key: string]: unknown; // Prevents strict missing-property errors for extra Strapi fields
-}
+// Fields of the "Popup" single type in Strapi
+export type NotifyPopupData = {
+  heading: string;
+  text: string;
+  emailPlaceholder: string;
+  buttonLabel: string;
+  closeLabel: string;
+  successMessage: string;
+  duplicateMessage: string;
+};
 
 export async function getNotifyPopup(): Promise<NotifyPopupData> {
   "use cache";
