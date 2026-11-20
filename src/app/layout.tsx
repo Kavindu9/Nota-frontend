@@ -22,6 +22,12 @@ const geistMono = Geist_Mono({
 // };
 
 
+const FALLBACK = {
+  title: "Nōta",
+  description: "Smart pen for real thinking.",
+};
+
+
 export async function generateMetadata(): Promise<Metadata> {
   try {
     const { siteName, seo } = await getGlobal();
