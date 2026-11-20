@@ -32,6 +32,13 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     const { siteName, seo } = await getGlobal();
     if (!seo) return FALLBACK;
+
+    const image = seo.shareImage;
+    const images = image
+      ? [{ url: image.url, width: image.width ?? undefined, height: image.height ?? undefined, alt: image.alternativeText ?? seo.metaTitle }]
+      : undefined;
+
+
     return {
       metadataBase: new URL(process.env.SITE_URL ?? "http://localhost:3000"),
       title: seo.metaTitle,
