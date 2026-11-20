@@ -29,6 +29,12 @@ const FALLBACK = {
 
 
 export async function generateMetadata(): Promise<Metadata> {
+
+  const global = await getGlobal(); // null if Strapi refused or couldn't be reached
+  const seo = global?.seo;
+  if (!seo) return FALLBACK;
+
+  
   try {
     const { siteName, seo } = await getGlobal();
     if (!seo) return FALLBACK;
