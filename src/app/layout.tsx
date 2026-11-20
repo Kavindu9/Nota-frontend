@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = { 
-  title: "Nota pen", description: "Nota pen specifications" 
-};
+// export const metadata: Metadata = {
+//   title: "Nota pen",
+//   description: "Nota pen specifications",
+// };
 
 
 export async function generateMetadata(): Promise<Metadata> {
