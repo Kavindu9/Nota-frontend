@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { getGlobal } from "@/lib/strapi";
 
 import "@fontsource-variable/noto-serif-display/wdth.css";
 import "@fontsource-variable/inter";

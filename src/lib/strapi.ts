@@ -323,6 +323,20 @@ export async function getNotifyPopup(): Promise<NotifyPopupData> {
 }
 
 
+// ---------- Global: site name + SEO (page title, description, share picture) ----------
+export type SeoData = {
+  metaTitle: string; // browser tab + Google result title (max 60 characters)
+  metaDescription: string; // Google result text (max 160 characters)
+  shareImage: StrapiMedia | null; // the picture in WhatsApp / Facebook / LinkedIn / X link previews
+  preventIndexing: boolean; // true = ask search engines not to list the site (e.g. a staging copy)
+};
+
+export type GlobalData = {
+  siteName: string;
+  seo: SeoData | null;
+};
+
+
 
 export async function getGlobal(): Promise<GlobalData> {
   "use cache";
