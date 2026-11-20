@@ -1,0 +1,258 @@
+/* The wrapper sits ABOVE the Audience section while it slides over it */
+.wrapper {
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== The section: exactly one screen, dark ===== */
+.section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #131313;
+  color: #fff;
+}
+
+/* ===== Slides (stacked; only one visible at a time) ===== */
+.stage {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+}
+
+/* Every slide except the first starts hidden; GSAP crossfades them */
+.slide + .slide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.slideHeading {
+  position: absolute;
+  z-index: 3;
+  top: 35px;
+  left: calc(2.64vw - 9px);
+  font-family: var(--font-serif);
+  font-stretch: 62.5%;
+  font-weight: 400;
+  font-size: calc(2.74vw + 17px); /* ≈ 69px on a 1920px screen */
+  line-height: 1.13;
+  letter-spacing: -0.07em; /* but tighter, with normal word gaps */
+  color: #f2f2f2;
+  white-space: pre-line; /* show the Enter-key line breaks from Strapi ("\n") */
+}
+
+/* Centred product image (slides 1–3): above the heading, like the original */
+.imageBox {
+  position: absolute;
+  z-index: 2;
+  left: 25vw;
+  width: 50vw;
+  top: 6vh;
+  height: 86vh;
+}
+
+.image {
+  object-fit: contain; /* show the whole product, no cropping */
+}
+
+/* Full-screen photo (slide 4): fills everything, BEHIND the heading */
+.fullscreen .imageBox {
+  z-index: 0;
+  inset: 0;
+  width: auto;
+  height: auto;
+}
+
+.fullscreen .image {
+  object-fit: cover; /* fill the screen, crop the edges if needed */
+}
+
+/* ===== Frosted card on the right ===== */
+.card {
+  position: absolute;
+  z-index: 3;
+  bottom: 41px; /* anchored to the bottom, like the original */
+  right: calc(1.57vw + 9px);
+  width: calc(12.66vw + 189px); /* ≈ 430px on a 1920px screen */
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.cardTitle,
+.cardText {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(30px); /* blurs the image behind the card */
+  border-radius: 18px;
+}
+
+.cardTitle {
+  padding: calc(2.28vw - 3.5px) calc(2.2vw - 1px);
+  font-size: calc(0.26vw + 17px); /* ≈ 22px */
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+}
+
+.cardText {
+  padding: calc(2.4vw - 7.5px) calc(2.2vw - 1px);
+  font-size: 15.5px; /* the same at every screen size in the original */
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.33;
+  color: #ececec;
+}
+
+/* ===== Progress bars ===== */
+.progress {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 5.3vh;
+  transform: translateX(-50%); /* centre it */
+  display: flex;
+  gap: 8px;
+}
+
+.bar {
+  width: 8.1vw;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.35);
+  transition: background-color 0.4s; /* smooth switch when the slide changes */
+}
+
+.barActive {
+  background: #fff;
+}
+
+/* ===== White panel of 6 columns (covers the slides at first) ===== */
+.cover {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  pointer-events: none;
+}
+
+.col {
+  position: relative;
+  background: #fff;
+  transform-origin: bottom; /* shrinks downwards → the dark area grows from the top */
+}
+
+.line {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 100%;
+  background: #e6e6e6;
+  transform-origin: top; /* draws from the top down */
+  transform: scaleY(0); /* hidden until GSAP draws it */
+}
+
+/* ===== "Works with smart paper" (same style as the Specs heading) ===== */
+.intro {
+  position: absolute;
+  z-index: 6;
+  top: 27vh;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-serif);
+  font-stretch: 62.5%;
+  font-weight: 500;
+  font-size: clamp(56px, 10.6vw, 240px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  pointer-events: none;
+}
+
+.eyebrow {
+  color: #6b6b6b;
+}
+
+.title {
+  color: #000;
+}
+
+/* ===== Phones, and anyone who prefers less motion: simple stacked layout ===== */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .section {
+    height: auto;
+    overflow: visible;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro {
+    position: static;
+    order: -1; /* show the heading first */
+    padding: 80px 20px;
+    background: #fff;
+    font-size: clamp(48px, 14vw, 120px);
+  }
+
+  .cover,
+  .progress {
+    display: none;
+  }
+
+  .stage {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    padding: 64px 20px;
+  }
+
+  .slide,
+  .slide + .slide {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .slideHeading,
+  .imageBox,
+  .card,
+  .fullscreen .imageBox {
+    position: relative;
+    inset: auto;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+  }
+
+  .slideHeading {
+    font-size: clamp(30px, 9vw, 60px);
+  }
+
+  .imageBox,
+  .fullscreen .imageBox {
+    height: 60vw;
+    margin: 24px 0;
+  }
+
+  .card {
+    margin-top: 8px;
+  }
+
+  .cardTitle {
+    padding: 16px 20px;
+  }
+
+  .cardText {
+    padding: 16px 20px;
+  }
+}

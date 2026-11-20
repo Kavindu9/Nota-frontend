@@ -1,0 +1,114 @@
+/* ===== The section: one screen, slides stacked on top of each other ===== */
+.section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background: #000;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  /* 3-colour gradient from Strapi (the CSS variables are set on each slide) */
+  background: linear-gradient(to bottom, var(--top) 0%, var(--middle) 50%, var(--bottom) 100%);
+  color: var(--text);
+}
+
+/* Every slide except the first starts hidden; GSAP crossfades them */
+.slide + .slide {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* The tall pen, centred, from the top of the screen down to just above the bottom */
+.pen {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* The two text halves, on either side of the pen */
+.left,
+.right {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-serif);
+  font-stretch: 62.5%;
+  font-weight: 400;
+  font-size: 4.75vw; /* ≈ 90px on a 1900px screen */
+  line-height: 1;
+  letter-spacing: -0.07em; /* letters close together… */
+  word-spacing: 0.14em; /* …but normal gaps between words */
+  white-space: nowrap;
+}
+
+.left {
+  right: calc(50% + 6.64vw); /* its right edge ≈ 126px left of the pen's centre */
+}
+
+.right {
+  left: calc(50% + 6.58vw); /* its left edge ≈ 125px right of the pen's centre */
+}
+
+/* ===== Progress bars ===== */
+.progress {
+  position: absolute;
+  z-index: 1;
+  left: 50%;
+  bottom: 41px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+}
+
+.bar {
+  width: 8.38vw; /* ≈ 159px */
+  height: 2px;
+  background: rgba(255, 255, 255, 0.18);
+  transition: background-color 0.4s;
+}
+
+.barActive {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* ===== Phones, and anyone who prefers less motion: slides one under another ===== */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .section {
+    height: auto;
+  }
+
+  .slide,
+  .slide + .slide {
+    position: relative;
+    height: 100svh;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .left,
+  .right {
+    font-size: clamp(28px, 8vw, 56px);
+  }
+
+  .left {
+    top: 42%;
+    right: auto;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .right {
+    top: 58%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .pen {
+    opacity: 0.35; /* keep the text readable on top of the pen */
+  }
+
+  .progress {
+    display: none;
+  }
+}

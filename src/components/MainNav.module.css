@@ -1,0 +1,153 @@
+/* Fixed to the top of the screen, above every section.
+   It covers the full width, so it must let clicks through to the page below;
+   only its two visible parts take clicks again (pointer-events: auto). */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* ===== Left: logo + links (sizes are fixed px, like the original) ===== */
+.left {
+  position: absolute;
+  top: 17px;
+  left: 42px;
+  display: flex;
+  align-items: center;
+  gap: 57px; /* logo → first link */
+  pointer-events: auto;
+}
+
+/* Text logo (only used when no logo picture is uploaded in Strapi) */
+.logo {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  color: #fff;
+  text-decoration: none;
+}
+
+.logoImg {
+  display: block;
+  width: auto;
+  height: 24px;
+}
+
+.links {
+  display: flex;
+  gap: 56px; /* space between the links */
+  list-style: none;
+}
+
+.link {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #fff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.link:hover {
+  opacity: 0.6;
+}
+
+/* ===== Right: the white box ===== */
+.box {
+  position: absolute;
+  top: 21px;
+  right: 41px;
+  width: 430px;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; /* icon left, button right */
+  align-items: flex-start; /* the icon sits at the top, not in the middle */
+  background: #fff;
+  border-radius: 4px;
+  pointer-events: auto;
+}
+
+.mark {
+  display: block;
+  width: 38px;
+  height: 40px;
+}
+
+/* Black "Order Nōta One • $300" button */
+.order {
+  display: block;
+  border: 0; /* it's a <button> now: remove the browser's button look */
+  font-family: inherit;
+  cursor: pointer;
+  line-height: 52px; /* = the button height, so the text sits in the middle */
+  height: 52px;
+  padding: 0 20px;
+  border-radius: 4px;
+  background: #000;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap; /* never break the button text onto two lines */
+}
+
+.product {
+  color: #8a8a8a; /* "Nōta One" in grey */
+  transition: color 0.25s ease;
+}
+
+/* Hover: the button turns red */
+.order {
+  transition: background-color 0.25s ease; /* fade to red instead of jumping */
+}
+
+.order:hover {
+  background: #eb0d04; /* the original's red (measured from your recording) */
+}
+
+/* grey text is hard to read on red, so "Nōta One" turns light while hovering */
+.order:hover .product {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.dot {
+  margin: 0 10px;
+}
+
+/* ===== Phones: only the logo and the box; the links would not fit ===== */
+@media (max-width: 899px) {
+  .left {
+    top: 22px;
+    left: 20px;
+  }
+
+  .links {
+    display: none;
+  }
+
+  .box {
+    top: 12px;
+    right: 12px;
+    width: auto;
+    padding: 8px;
+    gap: 12px;
+    align-items: center;
+  }
+
+  .mark {
+    width: 28px;
+    height: 30px;
+  }
+
+  .order {
+    height: 40px;
+    line-height: 40px;
+    padding: 0 14px;
+    font-size: 13px;
+  }
+}

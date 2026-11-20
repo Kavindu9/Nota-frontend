@@ -1,0 +1,164 @@
+/* ===== The whole section: exactly one screen tall ===== */
+.section {
+  position: relative;
+  height: 100vh;
+  overflow: hidden; /* anything below the screen edge stays hidden */
+  background: #fff;
+}
+
+/* ===== Big heading (top layer) ===== */
+.heading {
+  position: absolute;
+  top: 1.5vh;
+  left: 0;
+  right: 0;
+  z-index: 3; /* above pen (1) and cards (2) */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-serif);
+  font-stretch: 62.5%; /* the narrow (condensed) version of the font */
+  font-weight: 500;
+  font-size: clamp(56px, 9.5vw, 220px);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  pointer-events: none;
+}
+
+.eyebrow {
+  color: #6b6b6b;
+}
+
+.title {
+  color: #000;
+}
+
+/* ===== Pen (bottom layer) ===== */
+.pen {
+  position: absolute;
+  top: 37vh; /* final resting place: nib touches "Specifications" */
+  left: 0;
+  right: 0;
+  margin: 0 auto; /* centre it */
+  width: 11.5vw;
+  z-index: 1;
+}
+
+.penImg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ===== The 3 cards (middle layer) ===== */
+.cards {
+  position: absolute;
+  left: 3.5vw;
+  right: 3.5vw;
+  bottom: 10vh;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1vw;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Shared "frosted glass" look for the card title box and list box */
+.cardHead,
+.cardBody {
+  background: rgba(243, 243, 243, 0.62);
+  backdrop-filter: blur(30px); /* blurs whatever is behind (the pen) */
+  border-radius: 18px;
+}
+
+.cardHead {
+  padding: 1.15vw 1.95vw;
+  font-size: clamp(18px, 2.1vw, 44px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  color:#000;
+}
+
+.cardBody {
+  list-style: none;
+  padding: 0.35vw 1.95vw;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0.85vw 0;
+  font-size: clamp(14px, 1.52vw, 32px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+  border-bottom: 1px solid #dcdcdc;
+  color:#000;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.dot {
+  flex-shrink: 0;
+  width: clamp(8px, 0.75vw, 16px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #c4c4c4;
+}
+
+/* Hide pen + cards until GSAP has placed them (prevents a flash on load).
+   Only on screens where the animation actually runs. */
+@media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+  .section [data-pen],
+  .section [data-card] {
+    visibility: hidden;
+  }
+}
+
+/* ===== Phones & tablets: simple stacked layout, no animation ===== */
+@media (max-width: 899px) {
+  .section {
+    height: auto;
+    padding: 48px 20px;
+  }
+
+  .heading,
+  .cards {
+    position: static;
+  }
+
+  .heading {
+    margin-bottom: 32px;
+  }
+
+  .pen {
+    display: none;
+  }
+
+  .cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cardHead {
+    padding: 16px 20px;
+  }
+
+  .cardBody {
+    padding: 4px 20px;
+  }
+
+  .item {
+    padding: 14px 0;
+  }
+}

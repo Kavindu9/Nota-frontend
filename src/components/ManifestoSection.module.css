@@ -1,0 +1,71 @@
+/* ===== Black section ===== */
+.section {
+  background: #000;
+  color: #fff;
+  padding: 16vh 2vw 45vh; /* top, sides, bottom (room to finish the reveal) */
+}
+
+/* ===== Big statement ===== */
+.statement {
+  font-family: var(--font-serif);
+  font-stretch: 62.5%; /* condensed, like the Specs heading */
+  font-weight: 400;
+  font-size: clamp(30px, 4.5vw, 110px);
+  line-height: 1.13;
+  letter-spacing: -0.06em; /* letters close together... */
+  word-spacing: 0.16em; /* ...but wide gaps between words, like the video */
+  color: #fff; /* final colour; GSAP starts the letters grey */
+}
+
+.word {
+  white-space: nowrap; /* keep the letters of one word on the same line */
+}
+
+/* ===== "Who it's for" block ===== */
+.audience {
+  display: grid;
+  grid-template-columns: 26.2vw 1fr; /* narrow label column + wide text column */
+  margin-top: 6vh;
+  padding-top: 5vh;
+  border-top: 1px solid #262626; /* the thin divider line */
+}
+
+.label {
+  font-size: clamp(12px, 1.45vw, 30px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  text-transform: uppercase; /* "Who it's for:" → "WHO IT'S FOR:" */
+  color: #5c5c5c;
+  line-height: 1;
+}
+
+.paragraphs {
+  font-size: clamp(16px, 2.6vw, 56px);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.065em;
+}
+
+.paragraphs p {
+  text-indent: 22%; /* big first-line indent, like the video */
+}
+
+/* ===== Phones ===== */
+@media (max-width: 899px) {
+  .section {
+    padding: 80px 20px 40vh; /* extra bottom space so the letter reveal can finish */
+  }
+
+  .audience {
+    grid-template-columns: 1fr; /* label above the text */
+    gap: 16px;
+  }
+
+  .paragraphs p {
+    text-indent: 0;
+  }
+
+  .paragraphs p + p {
+    margin-top: 1em;
+  }
+}

@@ -1,0 +1,174 @@
+/* The wrapper sits ABOVE the Smart Paper section while it rises over it */
+.wrapper {
+  position: relative;
+  z-index: 3;
+}
+
+/* ===== Stage: exactly one screen. Transparent until GSAP fades the black in ===== */
+.stage {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none; /* never block clicks on the slide underneath */
+}
+
+.black,
+.circle {
+  position: absolute;
+  inset: 0;
+}
+
+.black {
+  background: #000;
+}
+
+/* A full-screen white layer, cut into a circle by clip-path. GSAP grows the circle. */
+.circle {
+  background: #fff;
+  clip-path: circle(75vmax at 50% 50%); /* final state: covers everything */
+}
+
+/* "Inside / the box", centred on the screen */
+.heading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 1vh;
+  font-family: var(--font-serif);
+  font-stretch: 62.5%;
+  font-weight: 500;
+  font-size: 10.2vw; /* ≈ 194px on a 1900px screen */
+  line-height: 0.82;
+  letter-spacing: -0.095em;
+}
+
+.eyebrow {
+  color: #9a9a9a;
+}
+
+.title {
+  color: #000;
+}
+
+/* ===== Content below the stage (normal scrolling, white) ===== */
+.content {
+  background: #fff;
+  padding: 8vh 0 44vh; /* bottom space so the letter reveal can finish */
+}
+
+/* Light-grey panel, revealed through 25 horizontal stripes */
+.panel {
+  position: relative;
+  margin: 0 1.8vw;
+  padding: 0.4vw 0 1.4vw;
+  background: #f2f2f2;
+  --fill: 4.2%;
+  mask-image: repeating-linear-gradient(to bottom, #000 0 var(--fill), transparent var(--fill) 4%);
+}
+
+.imageBox {
+  position: relative;
+  width: 35.8vw;
+  aspect-ratio: 680 / 800; /* the photo's shape on the original site */
+  margin: 0 auto;
+}
+
+.image {
+  object-fit: cover;
+}
+
+/* Text on the right of the panel. Text sizes are fixed px, like the original. */
+.set {
+  position: absolute;
+  top: 1.75vw;
+  left: 71.4vw;
+}
+
+.setTitle {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+  color: #000;
+}
+
+.setText {
+  margin-top: 10px;
+  margin-left: 80px; /* indented under the title */
+  max-width: 350px;
+  font-size: 17px;
+  font-weight: 450;
+  letter-spacing: -0.03em;
+  line-height: 23px;
+  color: #222;
+}
+
+/* Large centred paragraph */
+.description {
+  max-width: 76vw;
+  margin: 44vh auto 0;
+  text-align: center;
+  font-family: var(--font-serif);
+  font-stretch: 62.5%;
+  font-weight: 400;
+  font-size: 3.38vw; /* ≈ 64px on a 1900px screen */
+  line-height: 1.2;
+  letter-spacing: -0.055em;
+  word-spacing: 0.08em;
+  color: #000; /* final colour; GSAP starts the letters light grey */
+}
+
+.word {
+  white-space: nowrap;
+}
+
+/* ===== Phones, and anyone who prefers less motion: simple layout ===== */
+@media (max-width: 899px), (prefers-reduced-motion: reduce) {
+  .stage {
+    height: auto;
+    padding: 80px 20px 0;
+    background: #fff;
+  }
+
+  .black,
+  .circle {
+    display: none; /* the stage is simply white on phones */
+  }
+
+  .heading {
+    position: static;
+    font-size: clamp(64px, 20vw, 140px);
+  }
+
+  .content {
+    padding: 48px 0 80px;
+  }
+
+  .panel {
+    margin: 0 20px;
+    padding: 20px;
+  }
+
+  .imageBox {
+    width: 100%;
+    max-width: 420px;
+  }
+
+  .set {
+    position: static;
+    margin-top: 24px;
+  }
+
+  .setText {
+    margin-left: 0;
+  }
+
+  .description {
+    max-width: none;
+    margin: 64px 20px 0;
+    font-size: clamp(26px, 7vw, 40px);
+  }
+}

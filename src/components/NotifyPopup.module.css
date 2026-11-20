@@ -1,0 +1,212 @@
+/* ===== The <dialog>: centred on the screen, above everything (the browser's "top layer") ===== */
+.dialog {
+  margin: auto; /* centres it horizontally and vertically */
+  padding: 0; /* the white box fills it completely (needed for "click outside to close") */
+  border: 0;
+  border-radius: 3px;
+  background: #fff;
+  width: 734px;
+  max-width: calc(100vw - 40px); /* never wider than the screen on phones */
+  max-height: calc(100vh - 40px);
+  overflow: auto;
+  animation: fadeIn 0.25s ease-out; /* plays every time it opens */
+}
+
+/* The dark layer behind the box: 40% black (measured from your recording) */
+.dialog::backdrop {
+  background: rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.25s ease-out;
+}
+
+/* While closing: fade out quickly (the JS really closes it when this ends) */
+.closing,
+.closing::backdrop {
+  animation: fadeOut 0.15s ease-in forwards; /* forwards = stay invisible at the end */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
+
+/* ===== Inside the box (sizes measured on a 1900px screen) ===== */
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 54px 27px 71px;
+  text-align: center;
+  outline: none; /* it receives focus when opening; no focus ring needed on the box itself */
+}
+
+.heading {
+  font-family: var(--font-serif);
+  font-stretch: 62.5%; /* the narrow (condensed) version, like the other big headings */
+  font-weight: 400;
+  font-size: 122px;
+  line-height: 1;
+  letter-spacing: -0.07em;
+  color: #000;
+}
+
+.text {
+  margin-top: 15px;
+  font-size: 21.5px;
+  font-weight: 400;
+  line-height: 31px;
+  color: #646464;
+  white-space: pre-line; /* keep the Enter-key line break from Strapi */
+}
+
+/* ===== The form ===== */
+.form,
+.success {
+  align-self: stretch; /* full width of the box (minus its padding) */
+  margin-top: 38px;
+}
+
+.form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* E-mail field: no box, just a grey line underneath */
+.input {
+  width: 100%;
+  padding: 0 2px 9px;
+  border: 0;
+  border-bottom: 1px solid #cbcbcb;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 21px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #000;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input::placeholder {
+  color: #747474;
+}
+
+.input:focus {
+  border-bottom-color: #000; /* the line turns black while typing */
+}
+
+/* "Already on the list" etc., in the gap between the line and the button */
+.message {
+  min-height: 41px; /* reserves the gap, so the button doesn't move when a message appears */
+  padding-top: 10px;
+  text-align: left;
+  font-size: 14px;
+  color: #eb0d04;
+}
+
+/* Black "Notify me •" button, red on hover */
+.submit {
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 29px;
+  border: 0;
+  border-radius: 4px;
+  background: #000;
+  color: #fff;
+  font: inherit;
+  font-size: 19.5px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  cursor: pointer;
+  transition: background-color 0.25s ease;
+}
+
+.submit:hover {
+  background: #eb0d04; /* the original's red */
+}
+
+.submit:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.dot {
+  margin-left: 12px; /* the "•" after "Notify me", same size as the text like the original */
+}
+
+/* Thank-you message (replaces the form) */
+.success {
+  min-height: 156px; /* = the form's height, so the box doesn't change size after signing up */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: #000;
+}
+
+/* "Close": plain grey text, no button look */
+.close {
+  margin-top: 51px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: 21px;
+  letter-spacing: -0.02em;
+  color: #656565;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+/* No fading for people who asked for less motion */
+@media (prefers-reduced-motion: reduce) {
+  .dialog,
+  .dialog::backdrop {
+    animation: none;
+  }
+}
+
+/* ===== Phones: smaller heading and spacing ===== */
+@media (max-width: 899px) {
+  .box {
+    padding: 32px 20px 40px;
+  }
+
+  .heading {
+    font-size: 72px;
+  }
+
+  .text {
+    font-size: 17px;
+    line-height: 25px;
+  }
+
+  .form,
+  .success {
+    margin-top: 28px;
+  }
+
+  .submit {
+    height: 60px;
+    padding: 0 20px;
+    font-size: 17px;
+  }
+
+  .close {
+    margin-top: 32px;
+  }
+}

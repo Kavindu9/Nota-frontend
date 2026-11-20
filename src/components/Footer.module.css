@@ -1,0 +1,110 @@
+/* The footer box. overflow: hidden cuts off the content while it is pushed up (the reveal). */
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: #000;
+  color: #fff;
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  min-height: 506px; /* the original footer's height */
+  padding: 84px 36px 98px 40px;
+}
+
+/* ===== Top row: about text | navigation + year ===== */
+.top {
+  display: grid;
+  grid-template-columns: 51.5% 1fr; /* navigation starts at ≈ 51.5% of the width */
+}
+
+.about {
+  font-size: 22px;
+  font-weight: 650;
+  letter-spacing: -0.045em;
+  line-height: 27.5px;
+  white-space: pre-line; /* keep the Enter-key line breaks from Strapi */
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between; /* navigation on the left, year on the right */
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #8c8c8c;
+}
+
+.links {
+  list-style: none;
+  margin-top: 14px;
+}
+
+.links a {
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 22px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.links a:hover {
+  opacity: 0.6;
+}
+
+.year {
+  text-align: right;
+}
+
+.yearValue {
+  margin-top: 14px;
+  font-size: 15px;
+  font-weight: 650;
+}
+
+/* ===== Bottom row, pushed to the bottom of the footer ===== */
+.bottom {
+  display: grid;
+  grid-template-columns: 51.5% 1fr auto; /* same 51.5% line as the navigation */
+  align-items: baseline;
+  margin-top: auto;
+  color: #7d7d7d;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.copyright {
+  font-size: 13px;
+  font-weight: 650;
+  color: #8c8c8c;
+}
+
+/* ===== Phones ===== */
+@media (max-width: 899px) {
+  .inner {
+    min-height: 0;
+    padding: 56px 20px 32px;
+    gap: 48px;
+  }
+
+  .top,
+  .bottom {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .about {
+    font-size: 19px;
+    line-height: 24px;
+  }
+
+  .bottom {
+    gap: 8px;
+  }
+}
