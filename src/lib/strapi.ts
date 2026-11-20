@@ -321,3 +321,13 @@ export async function getNotifyPopup(): Promise<NotifyPopupData> {
   cacheLife("minutes");
   return fetchFromStrapi("/api/popup");
 }
+
+
+
+export async function getGlobal(): Promise<GlobalData> {
+  "use cache";
+  cacheLife("minutes");
+  const data: GlobalData = await fetchFromStrapi("/api/global?populate[seo][populate]=shareImage");
+  if (data.seo?.shareImage) data.seo.shareImage.url = getStrapiMedia(data.seo.shareImage.url);
+  return data;
+}
