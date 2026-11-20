@@ -305,6 +305,17 @@ function getStrapiMedia(url: string): string {
 
 
 
+export interface NotifyPopupData {
+  id: number;
+  documentId?: string;
+  title?: string;
+  description?: string;
+  buttonText?: string;
+  buttonLink?: string;
+  isActive?: boolean;
+  [key: string]: unknown; // Prevents strict missing-property errors for extra Strapi fields
+}
+
 export async function getNotifyPopup(): Promise<NotifyPopupData> {
   "use cache";
   cacheLife("minutes");
